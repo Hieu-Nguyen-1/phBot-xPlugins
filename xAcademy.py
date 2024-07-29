@@ -402,8 +402,8 @@ def handle_joymax(opcode,data):
 						character['name'] = struct.unpack_from('<' + str(charLength) + 's',data,index)[0].decode('cp1252')
 						index+= charLength # name
 						
-						# Parsing differences on iSRO, jSRO and TrSRO
-						if locale == 18 or locale == 54 or locale == 56:
+						# Parsing differences on iSRO, jSRO, TrSRO and VSRO
+						if locale == 18 or locale == 54 or locale == 56 or locale == 61:
 							index+=2+struct.unpack_from('<H',data,index)[0]
 						
 						index+=1 # scale
@@ -414,19 +414,19 @@ def handle_joymax(opcode,data):
 						index+=2 # int
 						index+=2 # stats
 
-						if locale == 18 or locale == 54 or locale == 56:
+						if locale == 18 or locale == 54 or locale == 56 or locale == 61:
 							index+=4
 
 						index+=4 # hp
 						index+=4 # mp
 
-						if locale == 18 or locale == 54 or locale == 56:
+						if locale == 18 or locale == 54 or locale == 56 or locale == 61:
 							index+=2
 
 						character['is_deleting'] = data[index]
 						index+=1 # isDeleting
 
-						if locale == 18 or locale == 54 or locale == 56:
+						if locale == 18 or locale == 54 or locale == 56 or locale == 61:
 							index+=4
 
 						if character['is_deleting']:
@@ -461,7 +461,7 @@ def handle_joymax(opcode,data):
 						charList.append(character)
 						log(str(i+1)+") "+character['name']+" (Lv."+str(character['level'])+")"+(" [* "+character['deleted_at'].strftime('%H:%M %d/%m/%Y')+"]" if character['is_deleting'] else ""))
 
-					if locale == 18 or locale == 54 or locale == 56:
+					if locale == 18 or locale == 54 or locale == 56 or locale == 61:
 						index+=1 # unkByte01 / Remove warning
 
 					# Warning to check if the packet has been parsed successfully
@@ -596,7 +596,7 @@ if os.path.exists(getPath()):
 					log("Plugin: "+pName+" profile ["+configName+"] not found")
 				break
 	if useDefaultConfig:
-		loadConfigs()
+		loadConfigs("default")
 
 else:
 	loadDefaultConfig()
