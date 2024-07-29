@@ -523,7 +523,7 @@ def OnCharacterList(CharList):
 			# Condition to check if character is below 40
 			if charLevel < 40:
 				# Check setting
-				if QtBind.isChecked(gui,cbxSelectChar):
+				if QtBind.isChecked(gui,cbxSelectChar) or charName == CreatingNickname: #If create a new character, we will log in for the first time to accumulate experience
 					log("Plugin: Selecting character ["+charName+"] (Lower than level 40)")
 					select_character(charName)
 					return
